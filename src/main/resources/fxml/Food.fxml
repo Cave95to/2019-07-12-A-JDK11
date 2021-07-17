@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="473.0" prefWidth="339.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="it.polito.tdp.food.FoodController">
+<BorderPane prefHeight="473.0" prefWidth="339.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.food.FoodController">
    <top>
       <Label text="Esame 12/07/2019 - Turno A" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -54,12 +53,12 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnCalorie" mnemonicParsing="false" onAction="#doCalorie" prefWidth="80.0" text="Calorie" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnCalorie" disable="true" mnemonicParsing="false" onAction="#doCalorie" prefWidth="80.0" text="Calorie" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnSimula" mnemonicParsing="false" onAction="#doSimula" prefWidth="80.0" text="Simula" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnSimula" disable="true" mnemonicParsing="false" onAction="#doSimula" prefWidth="80.0" text="Simula" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>

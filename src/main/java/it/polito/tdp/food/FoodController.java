@@ -5,9 +5,12 @@
 package it.polito.tdp.food;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.food.model.Food;
 import it.polito.tdp.food.model.Model;
+import it.polito.tdp.food.model.Result;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,7 +44,7 @@ public class FoodController {
     private Button btnSimula; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxFood"
-    private ComboBox<?> boxFood; // Value injected by FXMLLoader
+    private ComboBox<Food> boxFood; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
@@ -49,19 +52,84 @@ public class FoodController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Creazione grafo...");
+    	this.txtK.clear();
+    	txtResult.appendText("Creazione grafo...\n");
+    	
+    	try {
+    		int numPorzioni = Integer.parseInt(this.txtPorzioni.getText());
+    		if(numPorzioni < 1) {
+    			this.txtResult.setText("Inserire un numero positivo di porzioni");
+    			return;
+    		}
+    		
+    		this.model.creaGrafo(numPorzioni);
+    		
+    		this.txtResult.appendText("#vertici: "+this.model.getNVertici() + "\n");
+    		this.txtResult.appendText("#archi: "+this.model.getNArchi() + "\n");
+    		
+    		this.btnCalorie.setDisable(false);
+    		this.btnSimula.setDisable(false);
+    		
+    		this.boxFood.getItems().clear();
+    		this.boxFood.getItems().addAll(this.model.getVertici());
+    		
+    	}catch(NumberFormatException e) {
+    		this.txtResult.setText("Inserire un numero intero di porzioni");
+    	}
+    	
     }
     
     @FXML
     void doCalorie(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Analisi calorie...");
+    	txtResult.appendText("Analisi calorie...\n");
+    	this.txtK.clear();
+    	
+    	Food f = this.boxFood.getValue();
+    	
+    	if(f == null) {
+    		this.txtResult.setText("selezionare un cibo");
+    		return;
+    	}
+    	
+    	List<Result> risultato = this.model.calcolaAdiacentiMax(f);
+    	
+    	if(risultato.size()==0) {
+    		
+    		this.txtResult.setText("vertice isolato");
+    		return;
+    	}
+    	
+    	for(int i = 0; i<5 && i < risultato.size(); i++) {
+    		this.txtResult.appendText(risultato.get(i).toString());
+    	}
     }
 
     @FXML
     void doSimula(ActionEvent event) {
     	txtResult.clear();
     	txtResult.appendText("Simulazione...");
+    	
+    	Food f = this.boxFood.getValue();
+    	
+    	if(f == null) {
+    		this.txtResult.setText("selezionare un cibo");
+    		return;
+    	}
+    	
+    	try {
+    		int numStazioni = Integer.parseInt(this.txtK.getText());
+    		if(numStazioni < 1 || numStazioni > 10) {
+    			this.txtResult.setText("Inserire un numero tra 1 e 10 di stazioni");
+    			return;
+    		}
+    		
+    		String messaggio = this.model.simula(f, numStazioni);
+    		this.txtResult.setText(messaggio);
+    		
+    	}catch(NumberFormatException e) {
+    		this.txtResult.setText("Inserire un numero intero di porzioni");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
