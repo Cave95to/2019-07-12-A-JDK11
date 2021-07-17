@@ -97,7 +97,7 @@ public class Simulator {
 					Event e2 = new Event (e.getTime()+ vicino.getPeso(),
 							EventType.FINE_PREPARAZIONE,
 							e.getStazione(),
-							vicino.getF());
+							vicino.getF());  // cambio il cibo
 					
 					this.queue.add(e2);
 					break;
@@ -121,7 +121,7 @@ public class Simulator {
 			Event e2 = new Event(e.getTime(), 
 					EventType.INIZIO_PREPARAZIONE, 
 					e.getStazione(), 
-					e.getFood());
+					e.getFood()); // mantengo il cibo vecchio perche mi serve per calcolare il nuovo
 			
 			this.queue.add(e2);
 			break;
